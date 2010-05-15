@@ -93,3 +93,15 @@ nnoremap <F5> "=strftime("%Y/%m/%d")<CR>P
 inoremap <F5> <C-R>=strftime("%Y/%m/%d")<CR>
 
 let g:ledger_fillstring = '»»»»»»'
+
+" Set up spellchecking
+if has("spell")
+	set spelllang=en_us
+	set spellfile=~/.vim/spell/en.ascii.add
+endif
+
+" Dealing with tabs
+set shiftwidth=4
+set tabstop=4
+au BufRead,BufNewFile *.py,*.pyw set expandtab
+au BufRead,BufNewFile Makefile* set noexpandtab
