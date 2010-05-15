@@ -1,0 +1,14 @@
+# alias to make using todo.sh easier
+if [ -x ${HOME}/bin/todo.sh ]; then
+    alias t='${HOME}/bin/todo.sh -d ${HOME}/Dropbox/.todo.cfg'
+fi
+
+# clean up old vim backup files
+alias clean='find . -name "*~" -exec rm {} \; -or -name ".*~" -exec rm {} \;'
+
+# ls aliases
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias back='\cd $OLDPWD'
