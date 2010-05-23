@@ -1,0 +1,52 @@
+#!/bin/bash
+
+if [[ $- == *i* ]]; then
+    if [[ $TERM == xterm* || $OSTYPE == darwin* ]]; then
+        # This puts the term information into the title
+        PSterminfo='\[\e]2;\u@\h: \w\a\]'
+    fi
+    PSparts[3]='(\d \T)\n'
+    PSparts[2]='[\u@\h \W]'
+    PSparts[1]='\$ '
+    PScolors[2]='\[\e[34m\]' # Blue
+    PScolors[3]='\[\e[35m\]' # Purple
+    PScolors[4]='\[\e[36m\]' # Cyan
+    PScolors[5]='\[\e[32m\]' # Green
+    PScolors[6]='\[\e[33m\]' # Yellow
+    PScolors[100]='\[\e[31m\]' # Badc
+    PScolors[0]='\[\e[0m\]' # Reset
+    if [[ $USER == root ]] ; then
+        PScolors[1]='\[\e[31m\]' # Red
+    elif [[ $SSH_CLIENT || $SSH_TTY || $SSH_CLIENT2 ]] ; then
+        PScolors[1]="${PScolors[6]}" # yellow
+        if [[ $HOSTNAME == jordan ]] ; then
+            PScolors[1]="${PScolors[5]}" # green
+        fi
+    else
+        unset PSparts[3]
+        PScolors[1]=""
+    fi
+    function bashrc_genps {
+        if [ "$1" -a "${PScolors[$1]}" ] ; then
+            PSgood="$PSterminfo${PSparts[3]}${PScolors[$1]}${PSparts[2]}${PSparts[1]}${PScolors[0]}"
+        else
+            PSgood="$PSterminfo${PSparts[3]}${PSparts[2]}${PSparts[1]}"
+        fi
+        PSbad="$PSterminfo${PSparts[3]}${PScolors[$1]}${PSparts[2]}${PScolors[100]}${PSparts[1]}${PScolors[0]}"
+    }
+    bashrc_genps 1
+    function safeprompt {
+        export PS1='{\u@\h \W}\$ '
+        unset PROMPT_COMMAND
+    }
+    alias stdprompt='bashrc_genps 1'
+    alias blueprompt='bashrc_genps 2'
+    alias purpleprompt='bashrc_genps 3'
+    alias cyanprompt='bashrc_genps 4'
+    alias greenprompt='bashrc_genps 5'
+    alias whiteprompt='bashrc_genps'
+    # this is executed before every prompt is displayed
+    # it changes the prompt based on the preceeding command
+    export PROMPT_COMMAND='[ $? = 0 ] && PS1=$PSgood || PS1=$PSbad'
+fi
+

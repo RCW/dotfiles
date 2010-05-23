@@ -223,6 +223,11 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# Set up the prompt
+if [ -x ${HOME}/.prompt ]; then
+	. ${HOME}/.prompt
+fi
+
 ## Some handy functions
 
 function extract \

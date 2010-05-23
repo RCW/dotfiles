@@ -1,4 +1,4 @@
-all: /home/msurface/.bashrc /home/msurface/.aliases /home/msurface/.vimrc
+all: /home/msurface/.bashrc /home/msurface/.aliases /home/msurface/.vimrc /home/msurface/.prompt
 
 /home/msurface/.bashrc: bashrc
 	cp bashrc /home/msurface/.bashrc
@@ -8,4 +8,7 @@ all: /home/msurface/.bashrc /home/msurface/.aliases /home/msurface/.vimrc
 
 /home/msurface/.vimrc: vimrc
 	cp vimrc /home/msurface/.vimrc
+
+/home/msurface/.prompt: prompt
+	cp prompt /home/msurface/.prompt
 
