@@ -2,8 +2,22 @@
 # Large parts of this were taken from 
 # http://www.memoryhole.net/kyle/2008/03/my_bashrc.html
 
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+# A note about Keychain and GPG. gpg-agent forgets the passphrase after a while
+# and you have to re-enter it. This may well be a good security feature but
+# it's dammed annoying and I don't use GPG enough to make it worthwhile. So
+# I've not asked keychain to manage gpg-agent.
+
+# If this isn't an interactive shell, only setup keychain and then finish.
+# It's also important to not print anything to the screen or we'll break scp.
+if [[ $- != *i* ]] ; then
+#	[ -x /usr/bin/keychain ] && keychain --quiet id_rsa FFA72600; \
+#	. ${HOME}/.keychain/${HOSTNAME}-sh; \
+#	. ${HOME}/.keychain/${HOSTNAME}-sh-gpg
+	[ -x /usr/bin/keychain ] && keychain --quiet id_rsa ; \
+	. ${HOME}/.keychain/${HOSTNAME}-sh
+
+	return
+fi
 
 # function to print debug messages
 # It can be turned on like so, 'MLSDEBUG=yes; . bashrc'
@@ -108,8 +122,13 @@ HOST=${OSTYPE%%[[:digit:*}
 export USER GROUPNAME HOST
 
 # Use keychain to setup ssh-agent and gpg-agent
-have keychain && keychain ; . ${HOME}/.keychain/${HOSTNAME}-sh; \
-	. ${HOME}/.keychain/${HOSTNAME}-sh-gpg
+dprint "Setting up keychain"
+#have keychain && keychain id_rsa FFA72600; \
+#	. ${HOME}/.keychain/${HOSTNAME}-sh; \
+#	. ${HOME}/.keychain/${HOSTNAME}-sh-gpg
+have keychain && keychain id_rsa ; \
+	. ${HOME}/.keychain/${HOSTNAME}-sh
+dprint "Done with keychain"
 
 # Set LEDGER for the ledger accounting program
 if [ -r ${HOME}/Documents/ledger.dat ]; then
