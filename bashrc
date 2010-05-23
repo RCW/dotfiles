@@ -112,8 +112,8 @@ have keychain && keychain ; . ${HOME}/.keychain/${HOSTNAME}-sh; \
 	. ${HOME}/.keychain/${HOSTNAME}-sh-gpg
 
 # Set LEDGER for the ledger accounting program
-if [ -r /home/msurface/Documents/ledger.dat ]; then
-    export LEDGER=/home/msurface/Documents/ledger.dat
+if [ -r ${HOME}/Documents/ledger.dat ]; then
+    export LEDGER=${HOME}/Documents/ledger.dat
 fi
 
 # Use Vim if it exists
