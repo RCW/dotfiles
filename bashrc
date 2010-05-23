@@ -20,7 +20,7 @@ dprint alive
 ## Some functions to manipulate paths
 # They make sure that
 # a) The directory exists
-# b) The directoy isn't already in the path
+# b) The directory isn't already in the path
 
 # Append a directory
 function add_to_path \
@@ -132,6 +132,9 @@ else
 fi
 export HISTIGNORE="&:ls:[bf]g:exit"
 
+## set options
+set -o ignoreeof 	# Stop ctrl+d from logging me out
+
 ## shopt options
 shopt -s cdspell	# Correct minor spelling errors in a cd
 shopt -s histappend	# Append to history rather than overwrite
@@ -189,6 +192,7 @@ if [ -f ${HOME}/.aliases ]; then
 fi
 
 # enable color support of ls and also add handy aliases
+dprint "Making ls and grep use color"
 if [ -x /usr/bin/dircolors ]; then
     eval "`dircolors -b`"
     alias ls='ls --color=auto'
@@ -199,5 +203,39 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+
+## Some handy functions
+
+function extract \
+{
+	if [ -f $1 ] ; then
+		case $1 in
+			*.tar.bz2)	tar xjf $1		;;
+			*.tar.gz)	tar xzf $1		;;
+			*.bz2)		bunzip2 $1		;;
+			*.rar)		rar x $1		;;
+			*.gz)		gunzip $1		;;
+			*.tar)		tar xf $1		;;
+			*.tbz2)		tar xjf $1		;;
+			*.tgz)		tar xzf $1		;;
+			*.zip)		unzip $1		;;
+			*.Z)		uncompress $1	;;
+			*)			echo "'$1' cannot be extracted via extract()" ;;
+		esac
+	else
+		echo "'$1' is not a valid file"
+	fi
+}
+
+function psgrep \
+{
+	if [ ! -z $1 ] ; then
+		echo "Grepping for processes matching $1..."
+		ps aux | grep $1 | grep -v grep
+	else
+		echo "!! Need name to grep for"
+	fi
+}
+
 
 dprint BASHRC_DONE
