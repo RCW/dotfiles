@@ -1,4 +1,4 @@
-all: /home/msurface/.bashrc /home/msurface/.aliases /home/msurface/.vimrc /home/msurface/.prompt
+all: /home/msurface/.bashrc /home/msurface/.aliases /home/msurface/.vimrc /home/msurface/.prompt /home/msurface/.conkyrc
 
 /home/msurface/.bashrc: bashrc
 	cp bashrc /home/msurface/.bashrc
@@ -11,4 +11,7 @@ all: /home/msurface/.bashrc /home/msurface/.aliases /home/msurface/.vimrc /home/
 
 /home/msurface/.prompt: prompt
 	cp prompt /home/msurface/.prompt
+
+/home/msurface/.conkyrc: conkyrc
+	cp conkyrc /home/msurface/.conkyrc
 
