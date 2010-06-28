@@ -126,8 +126,13 @@ dprint "Setting up keychain"
 #have keychain && keychain id_rsa FFA72600; \
 #	. ${HOME}/.keychain/${HOSTNAME}-sh; \
 #	. ${HOME}/.keychain/${HOSTNAME}-sh-gpg
-have keychain && keychain id_rsa ; \
-	. ${HOME}/.keychain/${HOSTNAME}-sh
+if have keychain ; then
+	if [[ -e ${HOME}/.ssh/id_rsa ]]; then
+		keychain id_rsa ; . ${HOME}/.keychain/${HOSTNAME}-sh
+	else
+		keychain ; . ${HOME}/.keychain/${HOSTNAME}-sh
+	fi
+fi
 dprint "Done with keychain"
 
 # Set LEDGER for the ledger accounting program
