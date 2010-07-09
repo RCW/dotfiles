@@ -69,6 +69,13 @@ no_buffers yes
 # set to yes if you want all text to be in uppercase
 uppercase no
 
+# Size of the standard text buffer (default is 256 bytes). This buffer is used
+# for intermediary text, such as individual lines, output from $exec vars, and
+# various other variables. Increasing the size of this buffer can drastically
+# reduce Conky's performance, but will allow for more text display per
+# variable.
+text_buffer_size 384
+
 TEXT
 ${color lightgrey}CPU Usage:${color #cc2222} $cpu% ${cpubar}
 ${color red}${cpugraph 0000ff 00ff00}
@@ -94,7 +101,7 @@ ${color #8844ee}Calendar
 ${color lightgrey}${execi 1800 conkyGoogleCalendar --username=USERNAME --password=PASSWORD --daysahead=7 --limit=3 --requestCalendarNames="Mitchell Surface;US Holidays;Geek Holidays" --nowho}
 *****
 ${color #8844ee}Fort Wayne weather
-${color lightgrey}${execi 1800 conkyForecast --location=USIN0211 --datatype=CC --imperial)
+${color lightgrey}${execi 1800 conkyForecast --location=USIN0211 --datatype=CC --imperial}
 Temp: ${execi 1800 conkyForecast --location=USIN0211 --datatype=HT --imperial}
 Winds: ${execi 1800 conkyForecast --location=USIN0211 --datatype=WS --imperial}
 Precip %: ${execi 1800 conkyForecast --location=USIN0211 --datatype=PC}
