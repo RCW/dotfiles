@@ -12,6 +12,8 @@ set backspace=indent,eol,start
 
 if has("vms")
   set nobackup		" do not keep a backup file, use versions instead
+elseif has("win32")
+  set nobackup		" I think ~ files are a bad idea under Windows
 else
   set backup		" keep a backup file
 endif
