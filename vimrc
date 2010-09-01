@@ -94,7 +94,7 @@ endif
 """""""
 
 " Very hackish way to ensure my Windows vim is readable
-if has(win32)
+if has("win32")
 	set colorscheme ir_black
 endif
 
