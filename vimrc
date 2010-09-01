@@ -20,7 +20,9 @@ endif
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
+set incsearch	" do incremental searching
+set ignorecase	" do case insensitive searches
+set smartcase	" but pay attention to case if search contains upper case
 set background=dark	" Tell Vim to use lighter colors
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
@@ -90,6 +92,11 @@ endif
 """""""
 " Stuff I've added after here
 """""""
+
+" Very hackish way to ensure my Windows vim is readable
+if has(win32)
+	set colorscheme ir_black
+endif
 
 " Insert current date
 nnoremap <F5> "=strftime("%Y/%m/%d")<CR>P
